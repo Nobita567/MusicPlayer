@@ -1,69 +1,47 @@
-#MIT License
+# ══════════════════════════════════════════════════════════════════
+#  config.py  —  Edit ONLY this file before deploying
+# ══════════════════════════════════════════════════════════════════
 
-#Copyright (c) 2021 SUBIN
+# ── Credentials (from https://my.telegram.org/apps) ──────────────
+API_ID       = 123456            # ← your api_id   (integer)
+API_HASH     = "your_api_hash"   # ← your api_hash (string)
+SESSION_NAME = "forwarder"       # session file name (auto-created)
 
-#Permission is hereby granted, free of charge, to any person obtaining a copy
-#of this software and associated documentation files (the "Software"), to deal
-#in the Software without restriction, including without limitation the rights
-#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#copies of the Software, and to permit persons to whom the Software is
-#furnished to do so, subject to the following conditions:
+# ── Channel → Group mapping ───────────────────────────────────────
+# Format: ("@source_channel", "@target_group")
+# Use @username OR numeric ID like -1001234567890
+CHANNEL_MAP = [
+    ("@channel_one",    "@my_target_group"),
+    ("@channel_two",    "@my_target_group"),
+    ("@channel_three",  "@my_target_group"),
+    ("@channel_four",   "@my_target_group"),
+    ("@channel_five",   "@my_target_group"),
+    ("@channel_six",    "@my_target_group"),
+    ("@channel_seven",  "@my_target_group"),
+    ("@channel_eight",  "@my_target_group"),
+    ("@channel_nine",   "@my_target_group"),
+    ("@channel_ten",    "@my_target_group"),
+    # Add more rows as needed ↑
+]
 
-#The above copyright notice and this permission notice shall be included in all
-#copies or substantial portions of the Software.
+# ── Delay settings ────────────────────────────────────────────────
+DELAY_BETWEEN_MESSAGES = 3    # seconds between each forwarded message
+DELAY_ON_FLOOD_EXTRA   = 10   # extra sleep added on top of Telegram's FloodWait
 
-#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-#SOFTWARE.
-import os
-import re
-from youtube_dl import YoutubeDL
-ydl_opts = {
-    "geo-bypass": True,
-    "nocheckcertificate": True
-    }
-ydl = YoutubeDL(ydl_opts)
-links=[]
-finalurl=""
-STREAM=os.environ.get("STREAM_URL", "https://eu10.fastcast4u.com/clubfmuae")
-regex = r"^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+"
-match = re.match(regex,STREAM)
-if match:
-    meta = ydl.extract_info(STREAM, download=False)
-    formats = meta.get('formats', [meta])
-    for f in formats:
-        links.append(f['url'])
-    finalurl=links[0]
-else:
-    finalurl=STREAM
+# ── Bulk history mode ─────────────────────────────────────────────
+# True  = forward ALL existing (old) messages first, then go live
+# False = only forward NEW messages from now on
+BULK_MODE  = True
+BULK_LIMIT = 0     # 0 = unlimited; e.g. 500 = last 500 msgs per channel
 
-class Config:
-    ADMIN = os.environ.get("ADMINS", '')
-    ADMINS = [int(admin) if re.search('^\d+$', admin) else admin for admin in (ADMIN).split()]
-    API_ID = int(os.environ.get("API_ID", ''))
-    CHAT = int(os.environ.get("CHAT", ""))
-    LOG_GROUP=os.environ.get("LOG_GROUP", "")
-    if LOG_GROUP:
-        LOG_GROUP=int(LOG_GROUP)
-    else:
-        LOG_GROUP=None
-    STREAM_URL=finalurl
-    ADMIN_ONLY=os.environ.get("ADMIN_ONLY", "N")
-    ARQ_API=os.environ.get("ARQ_API", "")
-    REPLY_MESSAGE=os.environ.get("REPLY_MESSAGE", None)
-    if REPLY_MESSAGE:
-        REPLY_MESSAGE=REPLY_MESSAGE
-    else:
-        REPLY_MESSAGE=None
-    DURATION_LIMIT=int(os.environ.get("MAXIMUM_DURATION", 15))
-    DELAY = int(os.environ.get("DELAY", 10))
-    API_HASH = os.environ.get("API_HASH", "")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "") 
-    SESSION = os.environ.get("SESSION_STRING", "")
-    playlist=[]
-    msg = {}
+# ── Media filters ─────────────────────────────────────────────────
+FORWARD_PHOTOS    = True
+FORWARD_VIDEOS    = True
+FORWARD_DOCUMENTS = True
+FORWARD_AUDIO     = True
+FORWARD_STICKERS  = False
 
+# ── Anonymous forwarding ──────────────────────────────────────────
+# True  = no "Forwarded from …" tag shown
+# False = keep original source attribution
+ANONYMOUS = False
