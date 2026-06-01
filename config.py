@@ -3,25 +3,19 @@
 # ══════════════════════════════════════════════════════════════════
 
 # ── Credentials (from https://my.telegram.org/apps) ──────────────
-API_ID       = 123456            # ← your api_id   (integer)
-API_HASH     = "your_api_hash"   # ← your api_hash (string)
+API_ID       = 30682277            # ← your api_id   (integer)
+API_HASH     = "2c65da846eb45ddaf1c1327b551ffbce"   # ← your api_hash (string)
 SESSION_NAME = "forwarder"       # session file name (auto-created)
 
 # ── Channel → Group mapping ───────────────────────────────────────
 # Format: ("@source_channel", "@target_group")
 # Use @username OR numeric ID like -1001234567890
 CHANNEL_MAP = [
-    ("@channel_one",    "@my_target_group"),
-    ("@channel_two",    "@my_target_group"),
-    ("@channel_three",  "@my_target_group"),
-    ("@channel_four",   "@my_target_group"),
-    ("@channel_five",   "@my_target_group"),
-    ("@channel_six",    "@my_target_group"),
-    ("@channel_seven",  "@my_target_group"),
-    ("@channel_eight",  "@my_target_group"),
-    ("@channel_nine",   "@my_target_group"),
-    ("@channel_ten",    "@my_target_group"),
-    # Add more rows as needed ↑
+    ("@Mervyhs",    "https://t.me/c/3907725059/1370"),
+    ("@tri_d_hentai",    "https://t.me/c/3907725059/1371"),
+    ("-1003924784868",  "https://t.me/c/3907725059/1372"),
+    ("-1002115488234",   "https://t.me/c/3907725059/1373"),
+    ("@Full_enjoygh",   "https://t.me/c/3907725059/1374"),
 ]
 
 # ── Delay settings ────────────────────────────────────────────────
